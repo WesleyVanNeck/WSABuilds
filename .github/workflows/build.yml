@@ -135,14 +135,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ needs.build.outputs.artifact }}_Windows_11-compressed
-          path: MagiskOnWSA/output/*_Windows_11.7z
+          path:  MagiskOnWSA/*_Windows_11.7z
 
       - name: Upload Windows 10 Artifact 📦
         if: inputs.wintype == 'Windows 10'
         uses: actions/upload-artifact@v4
         with:
             name: ${{ needs.build.outputs.artifact }}_Windows_10-compressed
-            path: MagiskOnWSA/output/*_Windows_10.7z
+            path:  MagiskOnWSA/*_Windows_10.7z
             
 #     - name: Pass to Windows 💸
 #       uses: actions/upload-artifact@v4
