@@ -170,50 +170,18 @@ jobs:
         working-directory: MagiskOnWSA
         run: 7z a -t7z -mx=6 -m0=LZMA2 -ms=on -mmt=8 -sdel -- "${{ steps.wsa.outputs.artifact }}_Windows_10.7z" ./output/*
       
-      - name: Prepare release tag 🏷️
-        id: releasetag
-        run: |
-          currentver=${{ inputs.wsa_ver }}
-          folderpath="/WSABuilds/Builds/Windows Subsystem For Android™ v$currentver/Windows 11/Windows 11 x86_64"
-          folderpathwin10="/WSABuilds/Builds/Windows Subsystem For Android™ v$currentver/Windows 10/" 
-          echo "DRIVE_FOLDER_PATH=$folderpath" >> $GITHUB_ENV  
-          echo "DRIVE_FOLDER_PATH_WIN10=$folderpathwin10" >> $GITHUB_ENV 
-          echo "WSA_TAG=Windows_11_$currentver" >> $GITHUB_ENV
-          echo "WSA_TAG_WIN10=Windows_10_$currentver" >> $GITHUB_ENV
-          echo "WSA_VER=$currentver" >> $GITHUB_ENV 
-
-      - name: Check GitHub ENV variables
-        run: |
-          echo "${{ steps.wsa.outputs.artifact }}"
-          echo "${{ steps.wsa.outputs.artifact_folder }}"
-          echo "${{ steps.date.outputs.date }}"
-          echo "${{ steps.wsa.outputs.built }}"
-          echo "${{ env.WSA_TAG }}"
-          echo "${{ env.WSA_VER }}"
-          echo "${{ env.DRIVE_FOLDER_PATH }}"
-
-      - name: Check Subdirectories and Directories
-        working-directory: MagiskOnWSA
-        run: |
-          ls -lR
-
-      - name: Upload Windows 11 x64 build to release 🤌
-        uses: softprops/action-gh-release@v2
+      - name: Upload Windows 11 Artifact 📦
+        uses: actions/upload-artifact@v4
         with:
-          files: MagiskOnWSA/${{ steps.wsa.outputs.artifact }}.7z
-          fail_on_unmatched_files: true
-          append_body: false
-          tag_name: ${{ env.WSA_TAG }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-            
-      - name: Upload Windows 10 x64 build to release 🤌
-        uses: softprops/action-gh-release@v2
+          name: ${{ needs.build.outputs.artifact }}-compressed
+          path: output
+
+      - name: Upload Windows 10 Artifact 📦
+        if: inputs.wintype == 'Windows 10'
+        uses: actions/upload-artifact@v4
         with:
-          files: MagiskOnWSA/${{ steps.wsa.outputs.artifact }}_Windows_10.7z
-          fail_on_unmatched_files: true
-          append_body: false
-          tag_name: ${{ env.WSA_TAG_WIN10 }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+            name: ${{ needs.build.outputs.artifact }}_Windows_10-compressed
+            path: output
 
 #     - name: Pass to Windows 💸
 #       uses: actions/upload-artifact@v4
