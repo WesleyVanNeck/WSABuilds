@@ -7,7 +7,7 @@ on:
         description: Target Windows version.
         required: true
         options: ["Windows 10","Windows 11"]
-        default: "Windows 11"  
+        default: "Windows 10"  
       arch:
         type: choice
         description: Target CPU architecture of WSA.
@@ -29,8 +29,8 @@ on:
         type: choice
         description: Root solution
         required: true
-        options: ["Non-root","KernelSU","Magisk Stable","Magisk Beta","Magisk Canary","Magisk Debug","Magisk Alpha (vvb2060)","Magisk Delta (HuskyDG)"]
-        default: "Magisk Stable"
+        options: ["Non-root","KernelSU"]
+        default: "KernelSU"
       gapps_brand:
         type: choice
         description: Google Apps brand
