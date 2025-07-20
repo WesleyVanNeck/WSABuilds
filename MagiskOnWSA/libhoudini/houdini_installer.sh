@@ -271,6 +271,68 @@ make_changes() {
     sudo chown root:2000 "$SYSTEM_MNT/bin/houdini64" || abort "Failed to set ownership for system houdini64"
     sudo chmod 755 "$SYSTEM_MNT/bin/houdini" || abort "Failed to set permissions for system houdini"
     sudo chmod 755 "$SYSTEM_MNT/bin/houdini64" || abort "Failed to set permissions for system houdini64"
+	
+	    # Copy vendor lib files from local directory
+    echo "Copying vendor library files from local directory..."
+    sudo cp "$HOUDINI_LOCAL_PATH/lib/libhoudini.so" "$VENDOR_MNT/lib/libhoudini.so" || abort "Failed to copy 32-bit libhoudini.so"
+    sudo cp "$HOUDINI_LOCAL_PATH/lib64/libhoudini.so" "$VENDOR_MNT/lib64/libhoudini.so" || abort "Failed to copy 64-bit libhoudini.so"
+
+    # Set proper permissions and ownership for main libhoudini.so files
+    sudo chown root:root "$VENDOR_MNT/lib/libhoudini.so" || abort "Failed to set ownership for 32-bit libhoudini.so"
+    sudo chown root:root "$VENDOR_MNT/lib64/libhoudini.so" || abort "Failed to set ownership for 64-bit libhoudini.so"
+    sudo chmod 644 "$VENDOR_MNT/lib/libhoudini.so" || abort "Failed to set permissions for 32-bit libhoudini.so"
+    sudo chmod 644 "$VENDOR_MNT/lib64/libhoudini.so" || abort "Failed to set permissions for 64-bit libhoudini.so"
+
+    # Set SELinux properties for vendor lib files
+    sudo setfattr -n security.selinux -v "u:object_r:same_process_hal_file:s0" "$VENDOR_MNT/lib/libhoudini.so" || abort "Failed to set SELinux context for 32-bit libhoudini.so"
+    sudo setfattr -n security.selinux -v "u:object_r:same_process_hal_file:s0" "$VENDOR_MNT/lib64/libhoudini.so" || abort "Failed to set SELinux context for 64-bit libhoudini.so"
+	
+	
+	# Copy vendor lib files from local directory
+    echo "Copying vendor library files from local directory..."
+    sudo cp "$HOUDINI_LOCAL_PATH/lib/libnb.so" "$VENDOR_MNT/lib/libnb.so" || abort "Failed to copy 32-bit libhoudini.so"
+    sudo cp "$HOUDINI_LOCAL_PATH/lib64/libnb.so" "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to copy 64-bit libhoudini.so"
+
+    # Set proper permissions and ownership for main libnb.so files
+    sudo chown root:root "$VENDOR_MNT/lib/libnb.so" || abort "Failed to set ownership for 32-bit libhoudini.so"
+    sudo chown root:root "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to set ownership for 64-bit libhoudini.so"
+    sudo chmod 644 "$VENDOR_MNT/lib/libnb.so" || abort "Failed to set permissions for 32-bit libhoudini.so"
+    sudo chmod 644 "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to set permissions for 64-bit libhoudini.so"
+
+    # Set SELinux properties for vendor lib files
+    sudo setfattr -n security.selinux -v "u:object_r:same_process_hal_file:s0" "$VENDOR_MNT/lib/libnb.so" || abort "Failed to set SELinux context for 32-bit libhoudini.so"
+    sudo setfattr -n security.selinux -v "u:object_r:same_process_hal_file:s0" "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to set SELinux context for 64-bit libhoudini.so"
+
+    # Copy vendor bin files from local directory
+    echo "Copying vendor binary files from local directory..."
+    sudo cp "$HOUDINI_LOCAL_PATH/bin/houdini" "$VENDOR_MNT/bin/" || abort "Failed to copy houdini to vendor bin"
+    sudo cp "$HOUDINI_LOCAL_PATH/bin/houdini64" "$VENDOR_MNT/bin/" || abort "Failed to copy houdini64 to vendor bin"
+
+    # Set SELinux properties for vendor bin files
+    sudo setfattr -n security.selinux -v "u:object_r:same_process_hal_file:s0" "$VENDOR_MNT/bin/houdini" || abort "Failed to set SELinux context for vendor houdini"
+    sudo setfattr -n security.selinux -v "u:object_r:same_process_hal_file:s0" "$VENDOR_MNT/bin/houdini64" || abort "Failed to set SELinux context for vendor houdini64"
+
+    # Copy to system bin and set SELinux properties
+    echo "Copying to system bin..."
+    sudo cp "$HOUDINI_LOCAL_PATH/bin/houdini" "$SYSTEM_MNT/bin/" || abort "Failed to copy houdini to system bin"
+    sudo cp "$HOUDINI_LOCAL_PATH/bin/houdini64" "$SYSTEM_MNT/bin/" || abort "Failed to copy houdini64 to system bin"
+
+    # Set SELinux properties for system bin files
+    sudo setfattr -n security.selinux -v "u:object_r:system_file:s0" "$SYSTEM_MNT/bin/houdini" || abort "Failed to set SELinux context for system houdini"
+    sudo setfattr -n security.selinux -v "u:object_r:system_file:s0" "$SYSTEM_MNT/bin/houdini64" || abort "Failed to set SELinux context for system houdini64"
+
+    # Set ownership and permissions for vendor bin files (root:2000, 755)
+    sudo chown root:2000 "$VENDOR_MNT/bin/houdini" || abort "Failed to set ownership for vendor houdini"
+    sudo chown root:2000 "$VENDOR_MNT/bin/houdini64" || abort "Failed to set ownership for vendor houdini64"
+    sudo chmod 755 "$VENDOR_MNT/bin/houdini" || abort "Failed to set permissions for vendor houdini"
+    sudo chmod 755 "$VENDOR_MNT/bin/houdini64" || abort "Failed to set permissions for vendor houdini64"
+
+    # Set ownership and permissions for system bin files (root:2000, 755)
+    sudo chown root:2000 "$SYSTEM_MNT/bin/houdini" || abort "Failed to set ownership for system houdini"
+    sudo chown root:2000 "$SYSTEM_MNT/bin/houdini64" || abort "Failed to set ownership for system houdini64"
+    sudo chmod 755 "$SYSTEM_MNT/bin/houdini" || abort "Failed to set permissions for system houdini"
+    sudo chmod 755 "$SYSTEM_MNT/bin/houdini64" || abort "Failed to set permissions for system houdini64"
+
 
     # Copy ARM library files to vendor directories
     echo "Copying ARM library files to vendor directories..."
