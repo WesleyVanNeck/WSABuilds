@@ -138,7 +138,6 @@ jobs:
           path:  MagiskOnWSA/*_Windows_11.7z
 
       - name: Upload Windows 10 Artifact 📦
-        if: inputs.wintype == 'Windows 10'
         uses: actions/upload-artifact@v4
         with:
             name: ${{ needs.build.outputs.artifact }}_Windows_10-compressed
