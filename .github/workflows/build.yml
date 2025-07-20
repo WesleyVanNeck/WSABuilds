@@ -1,27 +1,58 @@
 name: Auto Build function (Use for call only)
 on:
-  workflow_dispatch:
     inputs:
+      wintype:
+        type: choice
+        description: Target Windows version.
+        required: true
+        options: ["Windows 10","Windows 11"]
+        default: "Windows 11"  
       arch:
+        type: choice
+        description: Target CPU architecture of WSA.
+        required: true
+        options: [x64, arm64]
+        default: x64
+      release_type:
+        type: choice
+        description: WSA Release Channel
+        required: true
+        options: ["Retail","Release Preview","Insider Slow","Insider Fast","Insider Private"]
+        default: "Retail"
+      user_code:
         type: string
-      gapps:
-        type: string
-      root:
-        type: string
-      insider:
-        type: string
-      magiskver:
-        type: string
-      devicemodel:
-        type: string
-      amazonflag:
-        type: string
-      compressformat:
-       type: string
-      wsa_ver:
-        type: string
-      gappsver:
-        type: string    
+        description: User code for WSA Insider User (Optional)
+        required: false
+        default: ""
+      root_sol:
+        type: choice
+        description: Root solution
+        required: true
+        options: ["Non-root","KernelSU","Magisk Stable","Magisk Beta","Magisk Canary","Magisk Debug","Magisk Alpha (vvb2060)","Magisk Delta (HuskyDG)"]
+        default: "Magisk Stable"
+      gapps_brand:
+        type: choice
+        description: Google Apps brand
+        required: true
+        options: ["MindTheGapps v13.0","No GApps"]
+        default: "MindTheGapps v13.0"
+      custom_model:
+        type: choice
+        description: Custom model
+        required: true
+        options: ["WSA Default", "Pixel 4a", "Pixel 4a (5G)", "Pixel 5", "Pixel 5a", "Pixel 6", "Pixel 6 Pro", "Pixel 6a", "Pixel 7", "Pixel 7 Pro", "Pixel 7a", "Pixel Tablet", "Pixel Fold"]
+        default: "Pixel 5"
+      compression:
+        type: choice
+        description: Compression format.
+        required: true
+        options: [".zip",".7z"]
+        default: ".7z"
+      remove_amazon:
+        description: "Remove Amazon Appstore from the system"
+        required: true
+        default: true
+        type: boolean
         
 jobs:
   build:
