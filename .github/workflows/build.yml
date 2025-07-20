@@ -57,7 +57,7 @@ jobs:
         run: |
           chmod -R 777 ./
           mkdir -p download
-          ./scripts/build.sh --release-type WIF --arch x64 MindTheGapps --root-sol kernelsu --compress-format none
+          ./scripts/build.sh --release-type WIF --arch x64 --install-gapps MindTheGapps --root-sol kernelsu --compress-format none
 
       - name: Install Houdini and Process Images 🔧
         working-directory: MagiskOnWSA
@@ -135,14 +135,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ needs.build.outputs.artifact }}_Windows_11-compressed
-          path: /output/*_Windows_11.7z
+          path: MagiskOnWSA/output/*_Windows_11.7z
 
       - name: Upload Windows 10 Artifact 📦
         if: inputs.wintype == 'Windows 10'
         uses: actions/upload-artifact@v4
         with:
             name: ${{ needs.build.outputs.artifact }}_Windows_10-compressed
-            path: /output/*_Windows_10.7z
+            path: MagiskOnWSA/output/*_Windows_10.7z
             
 #     - name: Pass to Windows 💸
 #       uses: actions/upload-artifact@v4
