@@ -57,7 +57,7 @@ jobs:
         run: |
           chmod -R 777 ./
           mkdir -p download
-          ./scripts/build.sh --release-type WIF --magisk-custom --magisk-ver release --arch x64 --compress-format none
+          ./scripts/build.sh --release-type WIF --magisk-ver release --arch x64 --compress-format none
 
       - name: Install Houdini and Process Images 🔧
         working-directory: MagiskOnWSA
