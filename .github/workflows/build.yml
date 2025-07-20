@@ -57,7 +57,7 @@ jobs:
         run: |
           chmod -R 777 ./
           mkdir -p download
-          ./scripts/build.sh --release-type WIF --magisk-ver stable --arch x64 MindTheGapps --root-sol kernelsu  --compress-format none
+          ./scripts/build.sh --release-type WIF --magisk-ver stable --arch x64 --gapps-brand MindTheGapps --root-sol kernelsu --compress-format none
 
       - name: Install Houdini and Process Images 🔧
         working-directory: MagiskOnWSA
@@ -74,7 +74,7 @@ jobs:
       - name: Compress artifact for Windows 11 x64 Build📦
         working-directory: MagiskOnWSA
         run: |
-          7z a -t7z -mx=6 -m0=LZMA2 -ms=on -mmt=8 -- "${{ steps.wsa.outputs.artifact }}.7z" ./output/*
+          7z a -t7z -mx=6 -m0=LZMA2 -ms=on -mmt=8 -- "${{ steps.wsa.outputs.artifact }}_Windows_11.7z" ./output/*
 
       - name: Run WSA Windows 10 Python Patch Script
         working-directory: MagiskOnWSA/output/${{ steps.wsa.outputs.artifact_folder }}
@@ -134,15 +134,15 @@ jobs:
       - name: Upload Windows 11 Artifact 📦
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ needs.build.outputs.artifact }}-compressed
-          path: /output/${{ steps.wsa.outputs.artifact }}.7z
+          name: ${{ needs.build.outputs.artifact }}_Windows_11-compressed
+          path: /output/*_Windows_11.7z
 
       - name: Upload Windows 10 Artifact 📦
         if: inputs.wintype == 'Windows 10'
         uses: actions/upload-artifact@v4
         with:
             name: ${{ needs.build.outputs.artifact }}_Windows_10-compressed
-            path: /output/${{ steps.wsa.outputs.artifact }}_Windows_10.7z
+            path: /output/*_Windows_10.7z
             
 #     - name: Pass to Windows 💸
 #       uses: actions/upload-artifact@v4
