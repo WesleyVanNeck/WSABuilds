@@ -82,7 +82,7 @@ process_wsa_image() {
 finalize_wsa_image() {
     local image_type="$1"
     
-    echo "=== Finalizing $image_type image ==="
+    echo "=== Finalizing $image_type image ===" #libnb
     
     # Step 1: Unmount
     echo "Unmounting $image_type..."
@@ -211,7 +211,7 @@ make_changes() {
             sudo mkdir -p "$SYSTEM_MNT/bin" || abort "Failed to create system bin directory after removing item"
         fi
     else
-        sudo mkdir -p "$SYSTEM_MNT/bin" || abort "Failed to create system bin directory"
+        sudo mkdir -p "$SYSTEM_MNT/bin" || abort "Failed to create system bin directory" #libnb
     fi
 
     # Copy binfmt_misc files from local directory
@@ -289,19 +289,19 @@ make_changes() {
 	
 	
 	# Copy vendor lib files from local directory
-    echo "Copying vendor library files from local directory..."
-    sudo cp "$HOUDINI_LOCAL_PATH/lib/libnb.so" "$VENDOR_MNT/lib/libnb.so" || abort "Failed to copy 32-bit libhoudini.so"
-    sudo cp "$HOUDINI_LOCAL_PATH/lib64/libnb.so" "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to copy 64-bit libhoudini.so"
+    #echo "Copying vendor library files from local directory..."
+    #sudo cp "$HOUDINI_LOCAL_PATH/lib/libnb.so" "$VENDOR_MNT/lib/libnb.so" || abort "Failed to copy 32-bit libhoudini.so"
+    #sudo cp "$HOUDINI_LOCAL_PATH/lib64/libnb.so" "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to copy 64-bit libhoudini.so"
 
     # Set proper permissions and ownership for main libnb.so files
-    sudo chown root:root "$VENDOR_MNT/lib/libnb.so" || abort "Failed to set ownership for 32-bit libhoudini.so"
-    sudo chown root:root "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to set ownership for 64-bit libhoudini.so"
-    sudo chmod 644 "$VENDOR_MNT/lib/libnb.so" || abort "Failed to set permissions for 32-bit libhoudini.so"
-    sudo chmod 644 "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to set permissions for 64-bit libhoudini.so"
+    #sudo chown root:root "$VENDOR_MNT/lib/libnb.so" || abort "Failed to set ownership for 32-bit libhoudini.so"
+    #sudo chown root:root "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to set ownership for 64-bit libhoudini.so"
+    #sudo chmod 644 "$VENDOR_MNT/lib/libnb.so" || abort "Failed to set permissions for 32-bit libhoudini.so"
+    #sudo chmod 644 "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to set permissions for 64-bit libhoudini.so"
 
     # Set SELinux properties for vendor lib files
-    sudo setfattr -n security.selinux -v "u:object_r:same_process_hal_file:s0" "$VENDOR_MNT/lib/libnb.so" || abort "Failed to set SELinux context for 32-bit libhoudini.so"
-    sudo setfattr -n security.selinux -v "u:object_r:same_process_hal_file:s0" "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to set SELinux context for 64-bit libhoudini.so"
+    #sudo setfattr -n security.selinux -v "u:object_r:same_process_hal_file:s0" "$VENDOR_MNT/lib/libnb.so" || abort "Failed to set SELinux context for 32-bit libhoudini.so"
+    #sudo setfattr -n security.selinux -v "u:object_r:same_process_hal_file:s0" "$VENDOR_MNT/lib64/libnb.so" || abort "Failed to set SELinux context for 64-bit libhoudini.so"
 
     # Copy vendor bin files from local directory
     echo "Copying vendor binary files from local directory..."
