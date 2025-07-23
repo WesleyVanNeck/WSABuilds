@@ -57,7 +57,7 @@ jobs:
         run: |
           chmod -R 777 ./
           mkdir -p download
-          ./scripts/build.sh --release-type WIF --arch x64 --install-gapps MindTheGapps --magisk-ver stable --compress-format none
+          ./scripts/build.sh --release-type WIF --arch x64 --magisk-ver stable --remove-amazon --compress-format none
 
       - name: Install Houdini and Process Images 🔧
         working-directory: MagiskOnWSA
